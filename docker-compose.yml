@@ -1,0 +1,25 @@
+version: '3'
+services:
+  jupyter-tutorial:
+    image: jupyter/base-notebook
+    container_name: jupyter.local
+    user: root
+    environment:
+      - GRANT_SUDO=yes
+    ports:
+      - "8888:8888"
+      - "5000:5000"
+    volumes:
+      - ./note/:/home/jovyan/work
+      #指定 jupyter的源碼資料夾保存位置 回本地端~/docker-lab/m9/note/
+    command: start-notebook.sh --NotebookApp.token=''
+  db:
+    image: mariadb
+    container_name: cc104.rds.local
+    #域名為 cc104.rds.local
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: hahaha
+    volumes:
+      - ./data/:/var/lib/mysql
+      #指定 jupyter的源碼資料夾保存位置 回本地端~/docker-lab/m9/data/
